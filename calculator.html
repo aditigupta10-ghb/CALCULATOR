@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Calculator</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+
+        /* Calculator */
+
+        .calculator {
+            width: 350px;
+
+            padding: 25px;
+
+            background: #1e293b;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* Heading */
+
+        h2 {
+            color: white;
+
+            text-align: center;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* Display */
+
+        #display {
+
+            width: 100%;
+
+            height: 70px;
+
+            margin-bottom: 20px;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #0f172a;
+
+            color: white;
+
+            font-size: 30px;
+
+            text-align: right;
+
+            outline: none;
+        }
+
+
+        /* Buttons container */
+
+        .buttons {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 10px;
+        }
+
+
+        /* All buttons */
+
+        button {
+
+            height: 60px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #334155;
+
+            color: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        /* Hover effect */
+
+        button:hover {
+
+            background: #475569;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* Click effect */
+
+        button:active {
+
+            transform: scale(0.95);
+        }
+
+
+        /* Operators */
+
+        .operator {
+
+            background: #6366f1;
+        }
+
+
+        .operator:hover {
+
+            background: #4f46e5;
+        }
+
+
+        /* Clear button */
+
+        .clear {
+
+            background: #ef4444;
+        }
+
+
+        .clear:hover {
+
+            background: #dc2626;
+        }
+
+
+        /* Equal button */
+
+        .equal {
+
+            background: #22c55e;
+        }
+
+
+        .equal:hover {
+
+            background: #16a34a;
+        }
+
+
+        /* Zero button */
+
+        .zero {
+
+            grid-column: span 2;
+        }
+
+
+        /* Responsive design */
+
+        @media (max-width: 400px) {
+
+            .calculator {
+
+                width: 95%;
+
+                padding: 20px;
+            }
+
+            button {
+
+                height: 55px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HTML ================= -->
+
+    <div class="calculator">
+
+        <h2>Calculator</h2>
+
+
+        <!-- Display -->
+
+        <input
+            type="text"
+            id="display"
+            readonly
+        >
+
+
+        <!-- Calculator Buttons -->
+
+        <div class="buttons">
+
+            <button
+                onclick="clearDisplay()"
+                class="clear">
+                AC
+            </button>
+
+            <button
+                onclick="deleteLast()">
+                DEL
+            </button>
+
+            <button
+                onclick="addValue('%')">
+                %
+            </button>
+
+            <button
+                onclick="addValue('/')"
+                class="operator">
+                ÷
+            </button>
+
+
+            <button
+                onclick="addValue('7')">
+                7
+            </button>
+
+            <button
+                onclick="addValue('8')">
+                8
+            </button>
+
+            <button
+                onclick="addValue('9')">
+                9
+            </button>
+
+            <button
+                onclick="addValue('*')"
+                class="operator">
+                ×
+            </button>
+
+
+            <button
+                onclick="addValue('4')">
+                4
+            </button>
+
+            <button
+                onclick="addValue('5')">
+                5
+            </button>
+
+            <button
+                onclick="addValue('6')">
+                6
+            </button>
+
+            <button
+                onclick="addValue('-')"
+                class="operator">
+                −
+            </button>
+
+
+            <button
+                onclick="addValue('1')">
+                1
+            </button>
+
+            <button
+                onclick="addValue('2')">
+                2
+            </button>
+
+            <button
+                onclick="addValue('3')">
+                3
+            </button>
+
+            <button
+                onclick="addValue('+')"
+                class="operator">
+                +
+            </button>
+
+
+            <button
+                onclick="addValue('0')"
+                class="zero">
+                0
+            </button>
+
+            <button
+                onclick="addValue('.')">
+                .
+            </button>
+
+            <button
+                onclick="calculate()"
+                class="equal">
+                =
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        // Get display element
+
+        let display =
+            document.getElementById("display");
+
+
+        // Add number/operator
+
+        function addValue(value) {
+
+            display.value += value;
+
+        }
+
+
+        // Clear display
+
+        function clearDisplay() {
+
+            display.value = "";
+
+        }
+
+
+        // Delete last character
+
+        function deleteLast() {
+
+            display.value =
+                display.value.slice(0, -1);
+
+        }
+
+
+        // Calculate result
+
+        function calculate() {
+
+            try {
+
+                if (display.value === "") {
+
+                    return;
+
+                }
+
+                display.value =
+                    eval(display.value);
+
+            }
+
+            catch (error) {
+
+                display.value = "Error";
+
+            }
+
+        }
+
+
+        // Keyboard support
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                let key = event.key;
+
+
+                // Numbers
+
+                if (
+                    (key >= "0" && key <= "9") ||
+                    key === "+" ||
+                    key === "-" ||
+                    key === "*" ||
+                    key === "/" ||
+                    key === "%" ||
+                    key === "."
+                ) {
+
+                    addValue(key);
+
+                }
+
+
+                // Enter key
+
+                else if (key === "Enter") {
+
+                    calculate();
+
+                }
+
+
+                // Backspace
+
+                else if (key === "Backspace") {
+
+                    deleteLast();
+
+                }
+
+
+                // Escape
+
+                else if (key === "Escape") {
+
+                    clearDisplay();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
